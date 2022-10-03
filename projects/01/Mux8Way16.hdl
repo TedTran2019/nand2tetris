@@ -1,0 +1,47 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Mux8Way16.hdl
+
+/**
+ * 8-way 16-bit multiplexor:
+ * out = a if sel == 000
+ *       b if sel == 001
+ *       etc.
+ *       h if sel == 111
+ */
+
+CHIP Mux8Way16 {
+    IN a[16], b[16], c[16], d[16],
+       e[16], f[16], g[16], h[16],
+       sel[3];
+    OUT out[16];
+
+    PARTS:
+    Not (in = sel[0], out = notsel0);
+    Not (in = sel[1], out = notsel1);
+    Not (in = sel[2], out = notsel2);
+    Custom3WayAnd (a = notsel0, b = notsel1, c = notsel2, out = sela);
+    Custom3WayAnd (a = sel[0], b = notsel1, c = notsel2, out = selb);
+    Custom3WayAnd (a = notsel0, b = sel[1], c = notsel2, out = selc);
+    Custom3WayAnd (a = sel[0], b = sel[1], c = notsel2, out = seld);
+    Custom3WayAnd (a = notsel0, b = notsel1, c = sel[2], out = sele);
+    Custom3WayAnd (a = sel[0], b = notsel1, c = sel[2], out = self);
+    Custom3WayAnd (a = notsel0, b = sel[1], c = sel[2], out = selg);
+    Custom3WayAnd (a = sel[0], b = sel[1], c = sel[2], out = selh);
+    Custom16And1 (a = a, b = sela, out = aAndsela);
+    Custom16And1 (a = b, b = selb, out = bAndselb);
+    Custom16And1 (a = c, b = selc, out = cAndselc);
+    Custom16And1 (a = d, b = seld, out = dAndseld);
+    Custom16And1 (a = e, b = sele, out = eAndsele);
+    Custom16And1 (a = f, b = self, out = fAndself);
+    Custom16And1 (a = g, b = selg, out = gAndselg);
+    Custom16And1 (a = h, b = selh, out = hAndselh);
+    Or16 (a = aAndsela, b = bAndselb, out = ab);
+    Or16 (a = cAndselc, b = dAndseld, out = cd);
+    Or16 (a = eAndsele, b = fAndself, out = ef);
+    Or16 (a = gAndselg, b = hAndselh, out = gh);
+    Or16 (a = ab, b = cd, out = abcd);
+    Or16 (a = ef, b = gh, out = efgh);
+    Or16 (a = abcd, b = efgh, out = out);
+}
