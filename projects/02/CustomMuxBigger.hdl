@@ -1,0 +1,19 @@
+CHIP CustomMuxBigger {
+    IN a[16], b[16], sel;
+    OUT out[16];
+
+    PARTS:
+    Not16 (in = a, out = nota);
+    Not16 (in = b, out = notb);
+    Not (in = sel, out = notsel);
+    And16 (a = a, b = b, out = aAndb);
+    And16 (a = a, b = notb, out = aAndNotb);
+    And16 (a = nota, b = b, out = NotaAndb);
+    Custom16And1 (a = aAndNotb, b = notsel, out = aAndNotbAndnotsel);
+    Custom16And1 (a = aAndb, b = notsel, out = aAndbAndnotsel);
+    Custom16And1 (a = aAndb, b = sel, out = aAndbAndsel);
+    Custom16And1 (a = NotaAndb, b = sel, out = NotaAndbAndsel);
+    Or16 (a = aAndNotbAndnotsel, b = aAndbAndnotsel, out = res1);
+    Or16 (a = aAndbAndsel, b = NotaAndbAndsel, out = res2);
+    Or16 (a = res1, b = res2, out = out);
+}

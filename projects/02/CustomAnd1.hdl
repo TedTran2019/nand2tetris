@@ -1,0 +1,22 @@
+CHIP CustomAnd1 {
+    IN a[16];
+    OUT out;
+
+    PARTS:
+    And (a = a[0], b = true, out = res0);
+    And (a = a[1], b = res0, out = res1);
+    And (a = a[2], b = res1, out = res2);
+    And (a = a[3], b = res2, out = res3);
+    And (a = a[4], b = res3, out = res4);
+    And (a = a[5], b = res4, out = res5);
+    And (a = a[6], b = res5, out = res6);
+    And (a = a[7], b = res6, out = res7);
+    And (a = a[8], b = res7, out = res8);
+    And (a = a[9], b = res8, out = res9);
+    And (a = a[10], b = res9, out = res10);
+    And (a = a[11], b = res10, out = res11);
+    And (a = a[12], b = res11, out = res12);
+    And (a = a[13], b = res12, out = res13);
+    And (a = a[14], b = res13, out = res14);
+    And (a = a[15], b = res14, out = out);
+}

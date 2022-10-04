@@ -42,5 +42,18 @@ CHIP ALU {
         ng; // 1 if (out < 0),  0 otherwise
 
     PARTS:
-   // Put you code here:
+    Not (in = zx, out = notzx);
+    Not (in = zy, out = notzy);
+    Custom16And1 (a = x, b = notzx, out = zxflagged);
+    Custom16Xor1 (a = zxflagged, b = nx, out = dx);
+    Custom16And1 (a = y, b = notzy, out = zyflagged);
+    Custom16Xor1 (a = zyflagged, b = ny, out = dy);
+    And16 (a = dx, b = dy, out = carry);
+    Add16 (a = dx, b = dy, out = sum);
+    CustomMuxBigger (a = carry, b = sum, sel = f, out = output);
+    Custom16Xor1 (a = output, b = no, out = doutput);
+    CustomIsNeg (a = doutput, out = ng);
+    Custom16Xor1 (a = doutput, b = true, out = flipped);
+    CustomAnd1 (a = flipped, out = zr);
+    Custom16And1 (a = doutput, b = true, out = out);
 }

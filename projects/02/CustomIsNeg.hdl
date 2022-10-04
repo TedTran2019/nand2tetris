@@ -1,0 +1,7 @@
+CHIP CustomIsNeg {
+    IN a[16];
+    OUT out;
+
+    PARTS:
+    And (a = a[15], b = true, out = out);
+}
