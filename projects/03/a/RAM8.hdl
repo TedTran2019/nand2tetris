@@ -15,5 +15,34 @@ CHIP RAM8 {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    // Not (in = address[0], out = notaddress0);
+    // Not (in = address[1], out = notaddress1);
+    // Not (in = address[2], out = notaddress2);
+    // Custom3WayAnd (a = notaddress0, b = notaddress1, c = notaddress2, out = addressa);
+    // Custom3WayAnd (a = address[0], b = notaddress1, c = notaddress2, out = addressb);
+    // Custom3WayAnd (a = notaddress0, b = address[1], c = notaddress2, out = addressc);
+    // Custom3WayAnd (a = address[0], b = address[1], c = notaddress2, out = addressd);
+    // Custom3WayAnd (a = notaddress0, b = notaddress1, c = address[2], out = addresse);
+    // Custom3WayAnd (a = address[0], b = notaddress1, c = address[2], out = addressf);
+    // Custom3WayAnd (a = notaddress0, b = address[1], c = address[2], out = addressg);
+    // Custom3WayAnd (a = address[0], b = address[1], c = address[2], out = addressh);
+    // And (a = addressa, b = load, out = loada);
+    // And (a = addressb, b = load, out = loadb);
+    // And (a = addressc, b = load, out = loadc);
+    // And (a = addressd, b = load, out = loadd);
+    // And (a = addresse, b = load, out = loade);
+    // And (a = addressf, b = load, out = loadf);
+    // And (a = addressg, b = load, out = loadg);
+    // And (a = addressh, b = load, out = loadh);
+    DMux8Way (in = load, sel = address, a = loada, b = loadb, c = loadc, d = loadd, 
+                                        e = loade, f = loadf, g = loadg, h = loadh);
+    Register (in = in, load = loada, out = a);
+    Register (in = in, load = loadb, out = b);
+    Register (in = in, load = loadc, out = c);
+    Register (in = in, load = loadd, out = d);
+    Register (in = in, load = loade, out = e);
+    Register (in = in, load = loadf, out = f);
+    Register (in = in, load = loadg, out = g);
+    Register (in = in, load = loadh, out = h);
+    Mux8Way16 (a = a, b = b, c = c, d = d, e = e, f = f, g = g, h = h, sel = address, out = out);
 }
