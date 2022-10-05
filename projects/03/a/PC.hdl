@@ -16,5 +16,17 @@ CHIP PC {
     OUT out[16];
 
     PARTS:
-    
+    Not (in = reset, out = notreset);
+    Custom16And1 (a = in, b = notreset, out = din);
+    Or (a = load, b = reset, out = loadOrReset);
+    Custom16And1 (a = din, b = load, out = ddin);
+    Not (in = load, out = notload);
+    And (a = notload, b = notreset, out = notloadAndnotreset);
+    And (a = inc, b = notloadAndnotreset, out = incAndnotloadAndnotreset);
+    Inc16 (in = prev, out = Incprev);
+    Custom16And1 (a = Incprev, b = incAndnotloadAndnotreset, out = dIncprev);
+    Or16 (a = dIncprev, b = ddin, out = set);
+    Or (a = loadOrReset, b = inc, out = loadOrResetOrinc);
+    Register (in = set, load = loadOrResetOrinc, out = prev);
+    Custom16And1 (a = prev, b = true, out = out);
 }
