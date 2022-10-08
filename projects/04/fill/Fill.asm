@@ -25,9 +25,6 @@
 
   @KBD
   D = M
-  @kbd
-  M = D
-  D = M
 
   @YLOOP2
   D;JEQ
