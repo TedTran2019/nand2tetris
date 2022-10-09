@@ -22,7 +22,6 @@
  * Screen and Keyboard chip specifications given in the book.
  */
 
-// Holy shit, KBD and Screen are implemented for you lmao.
 CHIP Memory {
     IN in[16], load, address[15];
     OUT out[16];
